@@ -8,3 +8,5 @@
 *.synctex.gz
 
 *.tpbuild
+rc.txt
+log.txt
