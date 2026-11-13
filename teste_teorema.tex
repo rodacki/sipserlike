@@ -1,0 +1,65 @@
+\documentclass{memoir}
+
+\usepackage{fontspec}
+\newfontfamily\Copperplate{Copperplate}
+\newfontfamily\CopperplateBold{Copperplate Bold}
+
+% =========================================================
+% TEORIAS, DEFINIÇÕES, EXEMPLOS — ESTILO SIPSER
+% =========================================================
+
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\newcommand{\sipsernumfont}{%
+  \begingroup
+  \fontspec[
+    UprightFont = *-Bold
+  ]{Latin Modern Sans}%
+  \fontsize{7pt}{7pt}\selectfont
+}
+
+% Ponto central Sipser
+\newcommand{\sipserdot}{%
+  \raisebox{0ex}{\scalebox{1.0}{\textperiodcentered}}%
+}
+
+\newcommand{\sipserdots}{%
+  \leavevmode
+  \leaders\hbox{\sipserdot\kern-2.2mm}\hfill\kern0pt
+}
+
+% Cabeçalho: Nome em Copperplate, Número em sans serif
+\newcommand{\sipserthmhead}[2]{%
+  {\Copperplate\MakeUppercase{#1}}%
+  \hspace{4mm}%
+  {\sipsernumfont #2\endgroup}%
+  \hspace{4mm}%
+  \sipserdots
+  \par
+}
+
+% Estilo de teorema
+\newtheoremstyle{sipserstyle}
+  {10pt}{10pt}%
+  {}{}{}{}%
+  {\newline}%
+  {\sipserthmhead{#1}{#2}}
+
+\theoremstyle{sipserstyle}
+
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{example}{Example}[chapter]
+
+
+\begin{document}
+
+\chapter{Teste}
+
+\begin{definition}
+Texto de teste para verificar a fonte do número.
+\end{definition}
+
+\end{document}

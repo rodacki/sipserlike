@@ -1,141 +1,579 @@
+\documentclass[10pt,twoside,openright]{memoir}
 
-\documentclass[10.5pt,twoside,openright]{memoir}
+
+
+% ----------------------------------------------------
+% TAMANHO DA FONTE BASE
+% ----------------------------------------------------
+\renewcommand{\normalsize}{\fontsize{10.5}{13}\selectfont}
+
+% ----------------------------------------------------
+% FONTES — APENAS PARA TÍTULOS
+% (texto permanece em Computer Modern)
+% ----------------------------------------------------
 \usepackage{fontspec}
-\usepackage{newtxtext,newtxmath} % texto + matemática
-%\usepackage{microtype}
-\usepackage{lipsum}	
-
-% =========================================================
-% FONTES COPPERPLATE (definidas antes de qualquer uso!)
-% =========================================================
 \newfontfamily\Copperplate{Copperplate}[Scale=MatchLowercase]
 \newfontfamily\CopperplateBold{Copperplate Bold}[Scale=MatchLowercase]
 
-% =========================================================
-% DIMENSÕES DO LIVRO (MEDIDAS FÍSICAS)
-% =========================================================
 
-% Tamanho da página (livro físico)
+% ----------------------------------------------------
+% DIMENSÕES DO LIVRO SIPER-LIKE
+% ----------------------------------------------------
 \setstocksize{234mm}{163mm}
 \settrimmedsize{234mm}{163mm}{*}
-
-% Tamanho da mancha: 192mm x 120mm
 \settypeblocksize{192mm}{120mm}{*}
-
-% Margens: interna 20mm, externa 23mm
 \setlrmarginsandblock{20mm}{23mm}{*}
-
-% Margens: superior 20mm, inferior 20mm
 \setulmarginsandblock{20mm}{20mm}{*}
-
-% Finalizar layout
 \checkandfixthelayout
 
-% =========================================================
-% PARÁGRAFOS
-% =========================================================
 
-\setlength{\parindent}{1.5em} % igual ao Sipser
-\setlength{\parskip}{0pt}     % sem espaço extra
+% ----------------------------------------------------
+% CABEÇALHO — HEADHEIGHT
+% ----------------------------------------------------
+\setlength{\headheight}{14pt}
+\checkandfixthelayout
+
+% ----------------------------------------------------
+% PARÁGRAFOS
+% ----------------------------------------------------
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt}
+\linespread{0.97}
+
+
+
+% ----------------------------------------------------
+% CORREÇÃO DO CABEÇALHO (AVISO DO MEMOIR)
+% ----------------------------------------------------
+\setlength{\headheight}{14pt}  % evita warnings
+\checkandfixthelayout
+\setlength{\headheight}{14pt}
+
+% ----------------------------------------------------
+% PARÁGRAFOS
+% ----------------------------------------------------
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt}
 \linespread{0.97}
 
 % =========================================================
-% ESTILO DAS SEÇÕES
+% CAPÍTULOS — ESTILO SIPSER (MEMOIR CORRETO)
+% =========================================================
+
+\makechapterstyle{sipser}{%
+
+  % ----------------------------------------------------
+  % Espaços antes e depois do capítulo (oficiais!)
+  % ----------------------------------------------------
+  \setlength{\beforechapskip}{50pt}
+  \setlength{\afterchapskip}{30pt}
+
+  % ----------------------------------------------------
+  % Remover "CAPÍTULO" automático
+  % ----------------------------------------------------
+  \renewcommand{\printchaptername}{}
+  \renewcommand{\chapternamenum}{}
+
+  % ----------------------------------------------------
+  % Número do capítulo
+  % ----------------------------------------------------
+  \renewcommand{\printchapternum}{%
+    {\Huge \CopperplateBold\addfontfeatures{LetterSpace=3.0}\thechapter}%
+    \par\vspace{10pt}%
+  }
+
+  % ----------------------------------------------------
+  % Título do capítulo
+  % ----------------------------------------------------
+  \renewcommand{\printchaptertitle}[1]{%
+    {\Huge \CopperplateBold\addfontfeatures{LetterSpace=2.0}\MakeUppercase{##1}}%
+  }
+
+  % ----------------------------------------------------
+  % Alinhamento à esquerda
+  % ----------------------------------------------------
+  \renewcommand{\chaptitlefont}{\Huge\normalfont\bfseries}
+  \renewcommand{\chapnumfont}{\Huge\normalfont\bfseries}
+  \renewcommand{\afterchapternum}{\par\vspace{10pt}}
+
+}
+\chapterstyle{sipser}
+
+
+
+% =========================================================
+% SEÇÕES E SUBSEÇÕES
 % =========================================================
 
 \setsecheadstyle{%
-  \Large
+  \large
+  \CopperplateBold
+  \MakeUppercase
+}
+
+\setsubsecheadstyle{%
+  \normalsize
   \Copperplate
   \MakeUppercase
 }
+
 \setbeforesecskip{18pt}
 \setaftersecskip{14pt}
 
-\setsubsecheadstyle{%
-  \large
-  \Copperplate
-  \MakeUppercase
-}
 \setbeforesubsecskip{12pt}
 \setaftersubsecskip{6pt}
 
-% =========================================================
-% CAPÍTULOS — ESTILO SIPSER (NÚMERO + TÍTULO)
-% =========================================================
 
-% Espaços antes e depois do capítulo
-\setlength{\beforechapskip}{50pt}
-\setlength{\afterchapskip}{30pt}
+% ==========================================================
+% HEADERS ESTILO SIPSER
+% ==========================================================
 
-% Remove os elementos automáticos de nome
-\renewcommand{\printchaptername}{}
-\renewcommand{\chapternamenum}{}
-
-% COMO IMPRIMIR O NÚMERO DO CAPÍTULO
-\renewcommand{\printchapternum}{%
-  {\Huge \Copperplate\thechapter}\par\vspace{10pt}%
-}
-
-% COMO IMPRIMIR O TÍTULO DO CAPÍTULO
-\renewcommand{\printchaptertitle}[1]{%
-  {\Huge \Copperplate\MakeUppercase{#1}}%
-}
-
-% Estilo geral da cabeça do capítulo
-\setchapheadstyle{\Huge\Copperplate\raggedright}
-
-% ------------------------------------------------
-% HEADINGS ESTILO SIPSER
-% ------------------------------------------------
-
+% Valores auxiliares (espaços)
 \newlength{\SevenMM}
 \setlength{\SevenMM}{7mm}
 \newlength{\FiveMM}
 \setlength{\FiveMM}{5mm}
 
+% Fonte do header
 \newcommand{\headerfont}{%
   \fontsize{7pt}{8pt}\selectfont
-  \Copperplate
+   \Copperplate
   \MakeUppercase
 }
 
+% Página em negrito sem serifa
 \newcommand{\pagenumfont}{%
-  \normalfont
-  \sffamily
-  \bfseries
+  \normalfont\sffamily\bfseries
 }
 
+% ----------------------------------------------------------
+% MARCAÇÕES (definem o conteúdo exibido no header)
+% ----------------------------------------------------------
+
 \renewcommand{\chaptermark}[1]{%
-  \markboth{CHAPTER \thechapter\space/\space \MakeUppercase{#1}}{}%
+  \markboth{CAPÍTULO \thechapter\space/\space \MakeUppercase{#1}}{}%
 }
 
 \renewcommand{\sectionmark}[1]{%
   \markright{\thesection\hspace{\FiveMM}\MakeUppercase{#1}}%
 }
 
+% ----------------------------------------------------------
+% DEFINIÇÃO DO PAGESTYLE SIPER
+% ----------------------------------------------------------
+
 \makepagestyle{sipserlike}
-  
+
 \makeevenhead{sipserlike}
   {%
-    {\begingroup\normalfont\sffamily\bfseries \thepage\endgroup}%
+    {\pagenumfont \thepage}%
     \hspace{\SevenMM}%
-    {\headerfont\leftmark}%
+    {\headerfont \leftmark}%
   }{}{}
 
 \makeoddhead{sipserlike}
   {}{}{%
-    {\headerfont\rightmark}%
+    {\headerfont \rightmark}%
     \hspace{\SevenMM}%
-    {\begingroup\normalfont\sffamily\bfseries \thepage\endgroup}%
+    {\pagenumfont \thepage}%
   }
 
-\makeevenfoot{sipserlike}{}{}{}
-\makeoddfoot{sipserlike}{}{}{}
+% Sem linha no topo
 \makeheadrule{sipserlike}{\textwidth}{0pt}
 
+% Rodapé vazio
+\makeevenfoot{sipserlike}{}{}{}
+\makeoddfoot{sipserlike}{}{}{}
+
+% Ativação do estilo
 \pagestyle{sipserlike}
 \aliaspagestyle{chapter}{sipserlike}
+
+% Não usar caixa alta automática do memoir
 \nouppercaseheads
+
+
+%\newtheoremstyle{spstyle}% nome
+%{10pt}% Espaço acima
+%{10pt}% Espaço abaixo
+%{}% corpo
+%{}% identação
+%{}% fonte do cabeçalho (não usado)
+%{}% pontuação
+%{\newline}% espaço depois do cabeçalho
+%{%
+%  \sipserthmhead{#1}{#2}%
+%}
+%
+%
+%\theoremstyle{spstyle}
+%\newtheorem{definition}{Definition}[chapter]
+%\newtheorem{theorem}{Theorem}[chapter]
+%\newtheorem{example}{Example}[chapter]
+
+
+%\usepackage{amsthm}
+%
+%% small caps Copperplate para títulos
+%\newcommand{\theoremheaderfont}{\Copperplate\scshape}
+%
+%\theoremstyle{plain}
+%\newtheorem{theorem}{Theorem}[chapter]
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{corollary}[theorem]{Corollary}
+%
+%\theoremstyle{definition}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{example}[theorem]{Example}
+%
+%\theoremstyle{remark}
+%\newtheorem{remark}[theorem]{Remark}
+%
+%% Aplica Copperplate smallcaps aos names
+%\makeatletter
+%\g@addto@macro\thm@headfont{\theoremheaderfont}
+%\makeatother
+
+
+%% =========================================================
+%% TEORIAS, DEFINIÇÕES, EXEMPLOS — ESTILO SIPSER
+%% =========================================================
+%
+%\usepackage{amsthm}
+%\usepackage{amssymb}
+%\usepackage{xcolor}
+%\usepackage{graphicx}
+%
+%% Pontinho central
+%\newcommand{\sipserdot}{%
+%  \raisebox{0ex}{\scalebox{1.0}{\textperiodcentered}}%
+%}
+%
+%% Linha pontilhada
+%\newcommand{\sipserdots}{%
+%  \leavevmode
+%  \leaders\hbox{\sipserdot\kern-2.2mm}\hfill\kern0pt
+%}
+%
+%% Fonte do número — igual à do número da página
+%\newcommand{\sipsernum}[1]{%
+%  {\pagenumfont\fontsize{7pt}{7pt}\selectfont #1}%
+%}
+%
+%% Cabeçalho à la Sipser
+%\newcommand{\sipserthmhead}[3]{%
+%  {\Copperplate\MakeUppercase{#1}}%
+%  \hspace{4mm}%
+%  \sipsernum{#2}%
+%  \hspace{4mm}%
+%  \sipserdots
+%  \ifx\relax#3\relax\else\space{\normalfont(#3)}\fi
+%  \par
+%}
+%
+%% Estilo do teorema
+%\newtheoremstyle{sipserstyle}
+%  {10pt}  % space above
+%  {10pt}  % space below
+%  {}      % body font
+%  {}      % indent
+%  {}      % head font
+%  {}      % delimiter
+%  {\newline} % space after head
+%  {\sipserthmhead{#1}{#2}{#3}}
+%
+%\theoremstyle{sipserstyle}
+%
+%% Ambientes
+%\newtheorem{definition}{Definition}[chapter]
+%\newtheorem{theorem}{Theorem}[chapter]
+%\newtheorem{example}{Example}[chapter]
+
+% =========================================================
+% TEORIAS, DEFINIÇÕES, EXEMPLOS — ESTILO SIPSER
+% =========================================================
+
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% ---------- Fonte do número igual à do número da página ----------
+\newcommand{\sipsernumfont}{%
+  \begingroup
+  \normalfont\sffamily\bfseries\fontsize{7pt}{7pt}\selectfont
+}
+
+\newcommand{\endsipsernumfont}{%
+  \endgroup
+}
+
+% ---------- Pontinho central ----------
+\newcommand{\sipserdot}{%
+  \raisebox{0ex}{\scalebox{1.0}{\textperiodcentered}}%
+}
+
+\newcommand{\sipserdots}{%
+  \leavevmode
+  \leaders\hbox{\sipserdot\kern-2.2mm}\hfill\kern0pt
+}
+
+% ---------- Cabeçalho do teorema ----------
+\newcommand{\sipserthmhead}[2]{%
+  {\Copperplate\MakeUppercase{#1}}%
+  \hspace{4mm}%
+  {\sipsernumfont #2\endsipsernumfont}%
+  \hspace{4mm}%
+  \sipserdots
+  \par
+}
+
+% ---------- THEOREMSTYLE ----------
+\newtheoremstyle{sipserstyle}
+  {10pt}   % space above
+  {10pt}   % space below
+  {}       % body font
+  {}       % indent
+  {}       % headfont
+  {}       % punctuation
+  {\newline}
+  {\sipserthmhead{#1}{#2}}
+
+\theoremstyle{sipserstyle}
+
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{example}{Example}[chapter]
+
+
+% =========================================================
+% CAPTIONS — ESTILO SIPSER
+% =========================================================
+\usepackage{caption}
+
+\DeclareCaptionFont{copperplate}{\Copperplate\scshape}
+\captionsetup{
+  font=copperplate,
+  labelfont=copperplate,
+  justification=raggedright,
+  singlelinecheck=false,
+  labelsep=period,
+  font+=small
+}
+
+
+
+%% =========================================================
+%% TEORIAS, DEFINIÇÕES, EXEMPLOS — ESTILO SIPSER
+%% =========================================================
+%
+%\usepackage{amsthm}
+%\usepackage{amssymb}
+%\usepackage{graphicx}
+%\usepackage{xcolor}
+%
+%% ---------- Símbolo quadrado pequeno estilo Sipser ----------
+%%\newcommand{\sipserdot}{%
+%%  {\Copperplate\textcolor{gray!35}{\raisebox{0.3ex}{\scalebox{0.50}{.}}}}%
+%%}
+%
+%\newcommand{\sipsernumfont}{%
+%  \begingroup
+%  \fontfamily{cmss}\selectfont % força sans-serif limpa
+%  \bfseries
+%  \fontsize{7pt}{7pt}\selectfont
+%}
+%\newcommand{\sipserdot}{%
+%  \raisebox{0ex}{%
+%    \scalebox{1.0}{\textperiodcentered}%
+%  }%
+%}
+%
+%\newcommand{\sipserdots}{%
+%  \leavevmode
+%  \leaders\hbox{\sipserdot\kern-2.2mm}\hfill\kern0pt
+%}
+%
+%% ---------- Cabeçalho do teorema ----------
+%\newcommand{\sipserthmhead}[2]{%
+%  {\Copperplate\MakeUppercase{#1}}%
+%  \hspace{4mm}%
+%  {\sipsernumfont  #2\endgroup}%
+%  \hspace{4mm}%
+%  \sipserdots
+%  \par
+%}
+%
+%% ---------- Definição da theoremstyle ----------
+%\newtheoremstyle{sipserstyle}
+%  {10pt}     % Space above
+%  {10pt}     % Space below
+%  {}         % Body font
+%  {}         % Indent
+%  {}         % Head font
+%  {}         % Punctuation after theorem head
+%  {\newline} % Space after head
+%  {\sipserthmhead{#1}{#2}} % Theorem head
+%
+%% ---------- Ativar estilo ----------
+%\theoremstyle{sipserstyle}
+%
+%% ---------- Ambientes ----------
+%\newtheorem{definition}{Definition}[chapter]
+%\newtheorem{theorem}{Theorem}[chapter]
+%\newtheorem{example}{Example}[chapter]
+
+% ----------------------------------------------------
+% PACOTES AUXILIARES
+% ----------------------------------------------------
+\usepackage{lipsum}	
+%
+%
+%
+%\setmainfont{Copperplate}
+%
+%% ----------------------------------------------------
+%% DIMENSÕES DO LIVRO SIPER-LIKE
+%% ----------------------------------------------------
+%\setstocksize{234mm}{163mm}
+%\settrimmedsize{234mm}{163mm}{*}
+%\settypeblocksize{192mm}{120mm}{*}
+%\setlrmarginsandblock{20mm}{23mm}{*}
+%\setulmarginsandblock{20mm}{20mm}{*}
+%\checkandfixthelayout
+
+% =========================================================
+% FONTES COPPERPLATE (definidas antes de qualquer uso!)
+% =========================================================
+%\setmainfont{Coperplate}
+%\newfontfamily\Copperplate{Copperplate}[Scale=MatchLowercase]
+%\newfontfamily\CopperplateBold{Copperplate Bold}[Scale=MatchLowercase]
+
+% =========================================================
+% DIMENSÕES DO LIVRO (MEDIDAS FÍSICAS)
+% =========================================================
+
+% Tamanho da página (livro físico)
+%\setstocksize{234mm}{163mm}
+%\settrimmedsize{234mm}{163mm}{*}
+%
+%% Tamanho da mancha: 192mm x 120mm
+%\settypeblocksize{192mm}{120mm}{*}
+%
+%% Margens: interna 20mm, externa 23mm
+%\setlrmarginsandblock{20mm}{23mm}{*}
+%
+%% Margens: superior 20mm, inferior 20mm
+%\setulmarginsandblock{20mm}{20mm}{*}
+%
+%% Finalizar layout
+%\checkandfixthelayout
+
+% =========================================================
+% PARÁGRAFOS
+% =========================================================
+
+%\setlength{\parindent}{1.5em} % igual ao Sipser
+%\setlength{\parskip}{0pt}     % sem espaço extra
+%\linespread{0.97}
+
+% =========================================================
+% ESTILO DAS SEÇÕES
+% =========================================================
+
+%\setsecheadstyle{%
+%  \Large
+%  \Copperplate
+%  \MakeUppercase
+%}
+%\setbeforesecskip{18pt}
+%\setaftersecskip{14pt}
+%
+%\setsubsecheadstyle{%
+%  \large
+%  \Copperplate
+%  \MakeUppercase
+%}
+%\setbeforesubsecskip{12pt}
+%\setaftersubsecskip{6pt}
+
+% =========================================================
+% CAPÍTULOS — ESTILO SIPSER (NÚMERO + TÍTULO)
+% =========================================================
+
+%% Espaços antes e depois do capítulo
+%\setlength{\beforechapskip}{50pt}
+%\setlength{\afterchapskip}{30pt}
+%
+%% Remove os elementos automáticos de nome
+%\renewcommand{\printchaptername}{}
+%\renewcommand{\chapternamenum}{}
+%
+%% COMO IMPRIMIR O NÚMERO DO CAPÍTULO
+%\renewcommand{\printchapternum}{%
+%  {\Huge \Copperplate\thechapter}\par\vspace{10pt}%
+%}
+%
+%% COMO IMPRIMIR O TÍTULO DO CAPÍTULO
+%\renewcommand{\printchaptertitle}[1]{%
+%  {\Huge \Copperplate\MakeUppercase{#1}}%
+%}
+%
+%% Estilo geral da cabeça do capítulo
+%\setchapheadstyle{\Huge\Copperplate\raggedright}
+
+% ------------------------------------------------
+% HEADINGS ESTILO SIPSER
+% ------------------------------------------------
+
+%\newlength{\SevenMM}
+%\setlength{\SevenMM}{7mm}
+%\newlength{\FiveMM}
+%\setlength{\FiveMM}{5mm}
+%
+%\newcommand{\headerfont}{%
+%  \fontsize{7pt}{8pt}\selectfont
+%  \Copperplate
+%  \MakeUppercase
+%}
+%
+%\newcommand{\pagenumfont}{%
+%  \normalfont
+%  \sffamily
+%  \bfseries
+%}
+%
+%\renewcommand{\chaptermark}[1]{%
+%  \markboth{CHAPTER \thechapter\space/\space \MakeUppercase{#1}}{}%
+%}
+%
+%\renewcommand{\sectionmark}[1]{%
+%  \markright{\thesection\hspace{\FiveMM}\MakeUppercase{#1}}%
+%}
+%
+%\makepagestyle{sipserlike}
+%  
+%\makeevenhead{sipserlike}
+%  {%
+%    {\begingroup\normalfont\sffamily\bfseries \thepage\endgroup}%
+%    \hspace{\SevenMM}%
+%    {\headerfont\leftmark}%
+%  }{}{}
+%
+%\makeoddhead{sipserlike}
+%  {}{}{%
+%    {\headerfont\rightmark}%
+%    \hspace{\SevenMM}%
+%    {\begingroup\normalfont\sffamily\bfseries \thepage\endgroup}%
+%  }
+%
+%\makeevenfoot{sipserlike}{}{}{}
+%\makeoddfoot{sipserlike}{}{}{}
+%\makeheadrule{sipserlike}{\textwidth}{0pt}
+%
+%\pagestyle{sipserlike}
+%\aliaspagestyle{chapter}{sipserlike}
+%\nouppercaseheads
 
 % =========================================================
 % DOCUMENTO
@@ -147,45 +585,45 @@
 
 {\Large Tentando carregar várias variantes}
 
-\bigskip
-A: {\Copperplate Copperplate — se aparecer, funcionou}
-
-\bigskip
-B: {\CopperplateBold Copperplate Bold — se aparecer, funcionou}
-
-\bigskip
-\newfontfamily\testA{Copperplate}
-A: {\testA Copperplate — se aparecer, funcionou}
-
-\bigskip
-\newfontfamily\testB{Copperplate Bold}
-B: {\testB Copperplate Bold}
-
-\bigskip
-\newfontfamily\testD{Copperplate Gothic Std}
-D: {\testD Copperplate Gothic}
-
-\bigskip
-\newfontfamily\testF{Copperplate-Light}
-F: {\testF Copperplate-Light}
-
-\bigskip
-\newfontfamily\testG{Copperplate-Bold}
-G: {\testG Copperplate-Bold}
-
-\bigskip
-
-\subsection*{Outras fontes para teste rápido}
-
-\fontspec{Helvetica} Helvetica — se aparecer, OK.
-
-\fontspec{Georgia} Georgia — se aparecer, OK.
-
-\fontspec{Gill Sans} Gill Sans — se aparecer, OK.
-
-\fontspec{Arial} Arial — se aparecer, OK.
-
-\bigskip\bigskip
+%\bigskip
+%A: {\Copperplate Copperplate — se aparecer, funcionou}
+%
+%\bigskip
+%B: {\CopperplateBold Copperplate Bold — se aparecer, funcionou}
+%
+%\bigskip
+%\newfontfamily\testA{Copperplate}
+%A: {\testA Copperplate — se aparecer, funcionou}
+%
+%\bigskip
+%\newfontfamily\testB{Copperplate Bold}
+%B: {\testB Copperplate Bold}
+%
+%\bigskip
+%\newfontfamily\testD{Copperplate Gothic Std}
+%D: {\testD Copperplate Gothic}
+%
+%\bigskip
+%\newfontfamily\testF{Copperplate-Light}
+%F: {\testF Copperplate-Light}
+%
+%\bigskip
+%\newfontfamily\testG{Copperplate-Bold}
+%G: {\testG Copperplate-Bold}
+%
+%\bigskip
+%
+%\subsection*{Outras fontes para teste rápido}
+%
+%\fontspec{Helvetica} Helvetica — se aparecer, OK.
+%
+%\fontspec{Georgia} Georgia — se aparecer, OK.
+%
+%\fontspec{Gill Sans} Gill Sans — se aparecer, OK.
+%
+%\fontspec{Arial} Arial — se aparecer, OK.
+%
+%\bigskip\bigskip
 
 \chapter{Capítulo de Teste}
 \section{Definições, Teoremas e Provas}
@@ -196,9 +634,15 @@ em CAIXA ALTA usando Copperplate.
 \newpage
 \lipsum[1-3]
 
+
 \newpage
-\section{Primeira seção}
+\section{Primeira seção .........}
 \lipsum[4-6]
+
+
+\begin{definition}
+A deterministic finite automaton is a 5-tuple $(Q,\Sigma,\delta,q_0,F)$...
+\end{definition}
 
 \section{Teste de seção}
 \lipsum[7-8]
@@ -208,8 +652,23 @@ em CAIXA ALTA usando Copperplate.
 
 \lipsum[9-10]
 
+
+\begin{definition}
+A deterministic finite automaton is a 5-tuple $(Q,\Sigma,\delta,q_0,F)$...
+\end{definition}
+
+
+
 \section{Determinismo}
 \lipsum[11-14]
+
+
+\begin{definition}
+A deterministic finite automaton is a 5-tuple $(Q,\Sigma,\delta,q_0,F)$...
+\end{definition}
+
+
+
 \lipsum[9-10]
 \lipsum[4-6]
 
